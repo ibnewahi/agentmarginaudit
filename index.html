@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgentMarginAudit.com — AI ROI & Margin Intelligence</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Syne+Mono&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --a:#D97706;--a2:#F59E0B;--a3:#FCD34D;--a4:#451A03;
+  --bg:#080604;--bg2:#0E0A05;--bg3:#14100A;
+  --b:rgba(217,119,6,.2);--bs:rgba(217,119,6,.07);
+  --t:#FDF6E8;--tm:#9A8A6A;--td:#4A3C20;
+  --gr:#16A34A;--re:#DC2626;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--t);font-family:'Syne',sans-serif;overflow-x:hidden;}
+
+/* Radial texture */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 0% 100%,rgba(217,119,6,.06) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 100% 0%,rgba(217,119,6,.04) 0%,transparent 50%);
+}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:16px 52px;
+  background:rgba(8,6,4,.85);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--b);
+}
+.nlogo{font-family:'Playfair Display',serif;font-size:17px;color:var(--a2);}
+.nlogo span{color:var(--td);font-family:'Syne Mono',monospace;font-size:13px;}
+.ncta{padding:8px 22px;
+  border:1px solid var(--a);color:var(--a2);
+  background:rgba(217,119,6,.08);
+  font-family:'Syne Mono',monospace;font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;
+  text-decoration:none;transition:all .2s;}
+.ncta:hover{background:rgba(217,119,6,.2);}
+
+/* HERO — editorial layout */
+.hero{position:relative;z-index:1;
+  min-height:100vh;display:flex;flex-direction:column;
+  justify-content:flex-end;padding:140px 52px 64px;
+  border-bottom:1px solid var(--b);overflow:hidden;
+}
+
+/* Big number bg */
+.hero-bg-num{
+  position:absolute;right:-40px;top:50%;transform:translateY(-50%);
+  font-family:'Playfair Display',serif;font-size:clamp(200px,30vw,400px);
+  color:rgba(217,119,6,.04);font-weight:700;line-height:1;
+  pointer-events:none;white-space:nowrap;
+  animation:float 6s ease-in-out infinite alternate;
+}
+@keyframes float{from{transform:translateY(-50%) translateX(0);}to{transform:translateY(-52%) translateX(-10px);}}
+
+.hero-content{position:relative;z-index:1;max-width:700px;}
+.h-eyebrow{font-family:'Syne Mono',monospace;font-size:9px;letter-spacing:4px;
+  color:var(--a);text-transform:uppercase;margin-bottom:20px;
+  opacity:0;animation:up .5s .1s forwards;}
+.hero-h1{font-family:'Playfair Display',serif;
+  font-size:clamp(40px,7vw,84px);font-weight:700;line-height:1.0;
+  letter-spacing:-.5px;opacity:0;animation:up .6s .25s forwards;}
+.hero-h1 em{font-style:italic;color:var(--a2);}
+.hero-sub{max-width:500px;margin-top:24px;font-size:15px;
+  line-height:1.8;color:var(--tm);font-weight:400;
+  opacity:0;animation:up .6s .4s forwards;}
+.hero-meta-row{display:flex;gap:40px;margin-top:40px;flex-wrap:wrap;
+  opacity:0;animation:up .6s .54s forwards;}
+.hm{display:flex;flex-direction:column;gap:4px;}
+.hm-num{font-family:'Playfair Display',serif;font-size:34px;color:var(--a2);line-height:1;}
+.hm-label{font-family:'Syne Mono',monospace;font-size:9px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--td);}
+.hero-cta-row{display:flex;gap:14px;margin-top:36px;flex-wrap:wrap;
+  opacity:0;animation:up .6s .66s forwards;}
+.btn-a{padding:13px 30px;background:var(--a);color:#080604;
+  font-family:'Syne Mono',monospace;font-size:10px;letter-spacing:2px;
+  text-transform:uppercase;text-decoration:none;display:inline-block;
+  font-weight:600;transition:background .2s;}
+.btn-a:hover{background:var(--a2);}
+.btn-ao{padding:13px 30px;background:transparent;color:var(--tm);
+  font-family:'Syne Mono',monospace;font-size:10px;letter-spacing:2px;
+  text-transform:uppercase;border:1px solid var(--b);text-decoration:none;
+  display:inline-block;transition:all .2s;}
+.btn-ao:hover{border-color:var(--a);color:var(--a2);}
+
+/* MARGIN WATERFALL */
+.waterfall-section{position:relative;z-index:1;
+  background:var(--bg2);border-bottom:1px solid var(--b);}
+.wf-inner{max-width:1200px;margin:0 auto;padding:80px 52px;
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
+.s-tag{font-family:'Syne Mono',monospace;font-size:9px;letter-spacing:4px;
+  color:var(--td);text-transform:uppercase;margin-bottom:14px;}
+.s-h{font-family:'Playfair Display',serif;font-size:clamp(24px,3.5vw,42px);
+  font-weight:700;line-height:1.1;}
+.s-h em{font-style:italic;color:var(--a2);}
+.s-desc{margin-top:16px;font-size:14px;line-height:1.85;color:var(--tm);}
+.s-point{display:flex;gap:10px;align-items:flex-start;margin-top:14px;
+  font-size:13px;color:var(--tm);line-height:1.6;}
+.s-point::before{content:'$';color:var(--a);font-family:'Syne Mono',monospace;flex-shrink:0;}
+
+/* Chart mockup */
+.chart-box{background:var(--bg3);border:1px solid var(--b);padding:24px;}
+.cb-header{display:flex;justify-content:space-between;align-items:center;
+  margin-bottom:20px;}
+.cb-title{font-family:'Syne Mono',monospace;font-size:10px;letter-spacing:2px;
+  text-transform:uppercase;color:var(--td);}
+.cb-val{font-family:'Playfair Display',serif;font-size:24px;color:var(--re);}
+.bar-chart{display:flex;flex-direction:column;gap:12px;}
+.bc-row{display:grid;grid-template-columns:130px 1fr 70px;gap:12px;align-items:center;}
+.bc-label{font-family:'Syne Mono',monospace;font-size:10px;color:var(--tm);white-space:nowrap;}
+.bc-track{height:28px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.04);
+  overflow:hidden;position:relative;}
+.bc-fill{height:100%;display:flex;align-items:center;padding:0 8px;
+  font-family:'Syne Mono',monospace;font-size:9px;font-weight:600;
+  white-space:nowrap;transition:width .8s ease;}
+.bc-num{font-family:'Syne Mono',monospace;font-size:10px;text-align:right;}
+.cb-total{margin-top:16px;padding-top:12px;border-top:1px solid var(--b);
+  display:flex;justify-content:space-between;align-items:center;}
+.cbt-label{font-family:'Syne Mono',monospace;font-size:10px;letter-spacing:2px;color:var(--td);text-transform:uppercase;}
+.cbt-val{font-family:'Playfair Display',serif;font-size:22px;color:var(--a2);}
+
+/* SECTION */
+.section{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:88px 52px;}
+
+/* Value cards */
+.val-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;
+  background:var(--b);margin-top:48px;border:1px solid var(--b);}
+.vc{background:var(--bg);padding:32px 28px;transition:background .2s;}
+.vc:hover{background:var(--bg2);}
+.vc-icon{font-size:22px;margin-bottom:14px;}
+.vc-title{font-family:'Syne Mono',monospace;font-size:11px;letter-spacing:1px;
+  text-transform:uppercase;color:var(--a2);margin-bottom:8px;}
+.vc-desc{font-size:13px;line-height:1.75;color:var(--tm);}
+
+/* Buyers */
+.buyer-list{margin-top:40px;display:flex;flex-direction:column;gap:0;}
+.bl{display:flex;gap:0;border:1px solid var(--b);margin-bottom:-1px;
+  background:var(--bg2);transition:background .2s;}
+.bl:hover{background:var(--bg3);}
+.bl-num{width:52px;background:var(--a4);display:flex;align-items:center;
+  justify-content:center;font-family:'Playfair Display',serif;
+  font-size:20px;color:var(--a);flex-shrink:0;}
+.bl-body{padding:18px 24px;flex:1;}
+.bl-title{font-size:15px;font-weight:600;margin-bottom:4px;}
+.bl-desc{font-size:13px;color:var(--tm);line-height:1.6;}
+.bl-price{padding:18px 24px;display:flex;align-items:center;
+  font-family:'Syne Mono',monospace;font-size:11px;color:var(--a);
+  white-space:nowrap;border-left:1px solid var(--b);}
+
+/* ACQUIRE */
+.acquire{position:relative;z-index:1;background:var(--bg2);border-top:1px solid var(--b);}
+.acq-inner{max-width:1200px;margin:0 auto;padding:88px 52px;
+  display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;}
+.price-card{border:1px solid var(--b);
+  background:linear-gradient(135deg,rgba(217,119,6,.08),transparent);
+  padding:44px;position:relative;}
+.price-card::after{content:'';position:absolute;top:0;left:0;
+  width:3px;height:100%;background:linear-gradient(to bottom,var(--a),transparent);}
+.pc-label{font-family:'Syne Mono',monospace;font-size:9px;letter-spacing:3px;
+  color:var(--td);text-transform:uppercase;margin-bottom:10px;}
+.pc-price{font-family:'Playfair Display',serif;font-size:52px;
+  color:var(--a2);letter-spacing:-1px;line-height:1;}
+.pc-sub{font-family:'Syne Mono',monospace;font-size:11px;color:var(--td);
+  margin-top:4px;margin-bottom:28px;}
+.pc-div{height:1px;background:var(--b);margin:18px 0;}
+.pc-feat{display:flex;gap:10px;font-size:13px;color:var(--tm);
+  line-height:1.6;margin-bottom:10px;}
+.pc-feat::before{content:'→';color:var(--a2);font-family:'Syne Mono',monospace;flex-shrink:0;}
+
+footer{position:relative;z-index:1;border-top:1px solid var(--b);
+  padding:20px 52px;display:flex;justify-content:space-between;
+  font-family:'Syne Mono',monospace;font-size:9px;color:var(--td);
+  letter-spacing:1px;flex-wrap:wrap;gap:10px;}
+
+@keyframes up{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+
+@media(max-width:900px){
+  nav{padding:14px 20px;}
+  .hero{padding:110px 20px 60px;}
+  .wf-inner,.acq-inner{grid-template-columns:1fr;}
+  .section{padding:60px 20px;}
+  .val-grid{grid-template-columns:1fr;}
+  .bc-row{grid-template-columns:90px 1fr 60px;}
+  footer{padding:16px 20px;flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nlogo">AgentMarginAudit<span>.com</span></div>
+  <a href="#acquire" class="ncta">Acquire</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg-num">$</div>
+  <div class="hero-content">
+    <div class="h-eyebrow">🔥 Hot Domain · AI FinOps Intelligence</div>
+    <h1 class="hero-h1">
+      Stop Bleeding<br>
+      <em>Agent Margin.</em>
+    </h1>
+    <p class="hero-sub">AI agent deployments are silently destroying enterprise margins through unaccounted token costs, redundant model calls, and zero ROI accountability. AgentMarginAudit.com owns the brand that fixes this.</p>
+    <div class="hero-meta-row">
+      <div class="hm"><div class="hm-num">$50K+</div><div class="hm-label">Avg monthly AI waste<br>per enterprise</div></div>
+      <div class="hm"><div class="hm-num">40%</div><div class="hm-label">AI budget growth<br>per year</div></div>
+      <div class="hm"><div class="hm-num">0</div><div class="hm-label">CFO tools for<br>agent margin audit</div></div>
+    </div>
+    <div class="hero-cta-row">
+      <a href="#acquire" class="btn-a">Acquire for $4,000</a>
+      <a href="#why" class="btn-ao">Market Data →</a>
+    </div>
+  </div>
+</section>
+
+<section class="waterfall-section">
+  <div class="wf-inner">
+    <div>
+      <div class="s-tag">// The Problem</div>
+      <h2 class="s-h">AI agents eat <em>margin</em><br>invisibly.</h2>
+      <p class="s-desc">Every AI agent call costs money. Multiply by thousands of daily calls, inefficient prompts, redundant model switches, and hallucination retries — and enterprises bleed six figures monthly without knowing it.</p>
+      <div class="s-point">A single prompt restructure can cut AI costs by 60%</div>
+      <div class="s-point">92% of enterprises have no per-agent cost attribution</div>
+      <div class="s-point">CFOs are now demanding AI margin accountability</div>
+      <div class="s-point">The market for AI cost optimization is worth $500M+ by 2027</div>
+    </div>
+    <div class="chart-box">
+      <div class="cb-header">
+        <div class="cb-title">Agent Cost Breakdown — ACME Corp Q1</div>
+        <div class="cb-val">−$48,200 waste</div>
+      </div>
+      <div class="bar-chart">
+        <div class="bc-row">
+          <div class="bc-label">GPT-4o calls</div>
+          <div class="bc-track"><div class="bc-fill" style="width:85%;background:rgba(220,38,38,.7);color:#fff;">$34,100</div></div>
+          <div class="bc-num" style="color:#DC2626;">↑ 214%</div>
+        </div>
+        <div class="bc-row">
+          <div class="bc-label">Retry storms</div>
+          <div class="bc-track"><div class="bc-fill" style="width:32%;background:rgba(220,38,38,.5);color:#fff;">$8,400</div></div>
+          <div class="bc-num" style="color:#DC2626;">waste</div>
+        </div>
+        <div class="bc-row">
+          <div class="bc-label">Prompt bloat</div>
+          <div class="bc-track"><div class="bc-fill" style="width:20%;background:rgba(217,119,6,.6);color:#fff;">$5,700</div></div>
+          <div class="bc-num" style="color:#D97706;">waste</div>
+        </div>
+        <div class="bc-row">
+          <div class="bc-label">Optimised ops</div>
+          <div class="bc-track"><div class="bc-fill" style="width:28%;background:rgba(22,163,74,.6);color:#fff;">$9,200</div></div>
+          <div class="bc-num" style="color:#16A34A;">✓ ROI</div>
+        </div>
+      </div>
+      <div class="cb-total">
+        <div class="cbt-label">Recoverable waste</div>
+        <div class="cbt-val">$48,200/mo</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="why" class="section">
+  <div class="s-tag">// Why This Domain</div>
+  <h2 class="s-h">The CFO's lens on <em>every agent call.</em></h2>
+  <div class="val-grid">
+    <div class="vc"><div class="vc-icon">🎯</div><div class="vc-title">Precise Positioning</div><div class="vc-desc">"Agent + Margin + Audit" speaks directly to three audiences simultaneously: FinOps teams, CFOs, and AI operations engineers. No brand currently owns this exact intersection.</div></div>
+    <div class="vc"><div class="vc-icon">📈</div><div class="vc-title">Market Timing</div><div class="vc-desc">AI budgets are growing 40% annually. As they scale, margin accountability becomes existential — not optional. The company that owns this brand owns the category.</div></div>
+    <div class="vc"><div class="vc-icon">💡</div><div class="vc-title">Self-Explanatory</div><div class="vc-desc">Unlike abstract AI brand names, AgentMarginAudit.com tells you exactly what it does. Zero marketing spend needed to explain the product — the domain is the pitch.</div></div>
+  </div>
+</section>
+
+<section class="section" style="border-top:1px solid var(--b);padding-top:0;">
+  <div class="s-tag">// Ideal Buyers</div>
+  <h2 class="s-h">Who should <em>own this</em> domain.</h2>
+  <div class="buyer-list">
+    <div class="bl"><div class="bl-num">1</div><div class="bl-body"><div class="bl-title">AI FinOps Startups</div><div class="bl-desc">Companies building cost optimization tools for AI workloads — CloudZero, Anodot, or new entrants — need a brand that speaks the CFO's language fluently.</div></div><div class="bl-price">Best fit</div></div>
+    <div class="bl"><div class="bl-num">2</div><div class="bl-body"><div class="bl-title">Management Consultancies</div><div class="bl-desc">Boutique AI consulting firms advising Fortune 500 on AI efficiency gains need a credible brand to anchor their FinOps service line.</div></div><div class="bl-price">High intent</div></div>
+    <div class="bl"><div class="bl-num">3</div><div class="bl-body"><div class="bl-title">Enterprise AI Platforms</div><div class="bl-desc">Vendors like Apptio, IBM Turbonomic, or AI observability tools expanding into margin intelligence would use this as a product module name.</div></div><div class="bl-price">Highest budget</div></div>
+    <div class="bl"><div class="bl-num">4</div><div class="bl-body"><div class="bl-title">Fractional CFO Practitioners</div><div class="bl-desc">Finance professionals building AI cost advisory services — exactly the practitioner this domain was built for — can anchor their entire personal brand here.</div></div><div class="bl-price">Fast decision</div></div>
+  </div>
+</section>
+
+<section id="acquire" class="acquire">
+  <div class="acq-inner">
+    <div>
+      <div class="s-tag">// Acquisition</div>
+      <h2 class="s-h" style="font-size:clamp(24px,3vw,40px);">Own the brand before<br><em>the market matures.</em></h2>
+      <p style="margin-top:20px;font-size:14px;line-height:1.85;color:var(--tm);">AI margin auditing is still an emerging discipline — but it's being forced into existence by CFOs who are being held accountable for ballooning AI spend. The company that owns AgentMarginAudit.com today will be the category leader when this market hits $500M.</p>
+      <p style="margin-top:14px;font-size:12px;color:var(--td);font-family:'Syne Mono',monospace;line-height:1.8;">Listed on Afternic · Escrow.com protected · 24-hour transfer · Bundle pricing with portfolio</p>
+    </div>
+    <div class="price-card">
+      <div class="pc-label">Buy It Now Price</div>
+      <div class="pc-price">$4,000</div>
+      <div class="pc-sub">Floor: $1,500 · Ceiling: $9,000</div>
+      <div class="pc-div"></div>
+      <div class="pc-feat">Full .com ownership on day one</div>
+      <div class="pc-feat">Escrow.com protected transfer</div>
+      <div class="pc-feat">Fast Transfer via Afternic network</div>
+      <div class="pc-feat">Lease-to-Own plans available</div>
+      <div class="pc-div"></div>
+      <a href="mailto:nasmisbah@gmail.com?subject=Acquisition: AgentMarginAudit.com" class="btn-a" style="display:block;text-align:center;">Send Acquisition Inquiry</a>
+      <a href="https://www.afternic.com" target="_blank" class="btn-ao" style="display:block;text-align:center;margin-top:10px;">View on Afternic →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>AgentMarginAudit.com · Premium AI Domain</div>
+  <div>AI FinOps · Margin Intelligence · CFO Grade</div>
+  <div>© 2026 · Part of AI Domain Portfolio</div>
+</footer>
+</body>
+</html>
